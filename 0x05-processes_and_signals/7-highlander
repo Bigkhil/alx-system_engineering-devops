@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+#Print To infinity and beyond infinite times
+_bib() 
+{
+    echo 'I am invincible!!!'
+}
+
+trap _bib SIGTERM
+while true;
+do
+	echo To infinity and beyond
+	sleep 2
+done
