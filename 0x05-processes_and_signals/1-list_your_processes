@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 #this script prints it's own PID
-top
+ps -uafx
