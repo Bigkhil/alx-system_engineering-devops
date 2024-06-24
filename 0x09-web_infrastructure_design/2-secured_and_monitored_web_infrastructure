@@ -1,0 +1,57 @@
+User Accessing the Website
+User Request:
+A user types www.foobar.com into their browser.
+Infrastructure Overview
+Servers
+Total Servers: 3
+Server 1: Load Balancer (HAProxy)
+Server 2: Web Server (Nginx) and Application Server
+Server 3: Database Server (MySQL)
+Additional Elements
+Firewalls: 3 (one for each server)
+SSL Certificate: To serve www.foobar.com over HTTPS
+Monitoring Clients: 3 (one for each server, collecting data for Sumologic or another monitoring service)
+Additional Elements and Their Roles
+Firewalls
+Role: Protect servers by controlling incoming and outgoing network traffic based on predetermined security rules. Each server has a firewall to filter unauthorized access and prevent attacks.
+Firewall 1: Protects the load balancer.
+Firewall 2: Protects the web/application server.
+Firewall 3: Protects the database server.
+SSL Certificate
+Role: Encrypts traffic between the user's browser and the server, ensuring secure data transmission. Serving the website over HTTPS improves security and trustworthiness.
+Monitoring Clients
+Role: Collect data on server performance, application health, and security events. Data is sent to a monitoring service (e.g., Sumologic) for analysis.
+Monitoring Client 1: On the load balancer.
+Monitoring Client 2: On the web/application server.
+Monitoring Client 3: On the database server.
+Communication with the User's Computer
+Protocol: HTTPS (using SSL/TLS for encryption)
+Infrastructure Diagram
+User's Browser: Sends a request to https://www.foobar.com.
+DNS Resolution: Resolves www.foobar.com to the IP of the load balancer.
+Firewall 1: Filters incoming traffic to the load balancer.
+Load Balancer (HAProxy): Receives the request, terminates SSL, and forwards it to one of the web/application servers based on the round-robin algorithm.
+Firewall 2: Filters incoming traffic to the web/application server.
+Web Server (Nginx): Receives the request and forwards dynamic content requests to the application server.
+Application Server: Processes the request, interacts with the database if necessary, and generates a response.
+Firewall 3: Filters incoming traffic to the database server.
+Database (MySQL): Provides data to the application server upon request.
+Application Server: Sends the generated response back to Nginx.
+Web Server (Nginx): Delivers the final response to the load balancer.
+Load Balancer (HAProxy): Sends the response back to the user's browser.
+Why HTTPS?
+Security: Encrypts data transmission between the client and server, protecting sensitive information from eavesdropping and tampering.
+Trust: Builds user trust by showing that the website is secure, as indicated by the padlock symbol in the browser.
+Monitoring
+Role: Monitoring is used to track server performance, detect anomalies, and ensure the health and security of the infrastructure.
+Data Collection: Monitoring clients on each server collect metrics such as CPU usage, memory usage, disk I/O, network traffic, and application logs. This data is sent to a central monitoring service like Sumologic for analysis and alerting.
+Monitoring QPS (Queries Per Second) on Web Server: Set up the monitoring tool to collect and visualize metrics related to HTTP requests. Configure alerts for abnormal spikes or drops in QPS.
+Issues with This Infrastructure
+Terminating SSL at the Load Balancer
+Issue: Terminating SSL at the load balancer means that traffic between the load balancer and the backend servers is unencrypted. This can be a security risk if the internal network is compromised.
+Single Write-Capable MySQL Server
+Issue: Having only one MySQL server capable of accepting writes (primary node) creates a bottleneck and a single point of failure. If the primary node goes down, write operations cannot be performed.
+Servers with All Components
+Issue: Having servers that combine the database, web server, and application server on each node can lead to resource contention. High database load can impact web server performance and vice versa. This setup can also complicate scaling and maintenance.
+Conclusion
+This three-server web infrastructure with firewalls, HTTPS, and monitoring improves security, performance, and reliability. However, it still has potential issues, such as SSL termination risks, single points of failure in the database, and resource contention on combined servers. Addressing these issues requires further optimization, such as end-to-end encryption, database clustering, and separating server roles.

@@ -1,0 +1,38 @@
+User Access Scenario:
+A user wants to access www.foobar.com, a website hosted on a single server with the following components:
+
+Server:
+A physical or virtual machine with an IP address 8.8.8.8.
+Web Server (Nginx):
+Nginx serves as the front-facing server that handles incoming HTTP requests and serves static content. It acts as a reverse proxy to the application server.
+Application Server:
+This server runs the application logic and generates dynamic content based on user requests. It communicates with the database server to fetch and store data.
+Application Files (Your Code Base):
+The code base contains the website's application logic, scripts, and files required to run the website.
+Database (MySQL):
+MySQL is used to store and manage the website's data. It interacts with the application server to handle data retrieval and storage operations.
+Domain Name (foobar.com) with www Record:
+The domain name foobar.com is configured with a www record pointing to the server's IP address 8.8.8.8.
+Specifics Explanation:
+Server: A server is a computer or software system that provides functionality or services to other programs or devices, known as clients.
+
+Domain Name: A domain name is a human-readable address used to access websites. It provides a way to map easily remembered names to numerical IP addresses like 8.8.8.8.
+
+DNS Record www: The www record in www.foobar.com is a CNAME (Canonical Name) DNS record that points to the domain's root record, indicating that the website is hosted on the server associated with the domain.
+
+Web Server: Nginx acts as the web server, handling incoming HTTP requests, serving static content, and routing requests to the application server for dynamic content generation.
+
+Application Server: The application server executes the website's business logic, processes user requests, and generates dynamic content. It communicates with the database to retrieve and store data.
+
+Database: MySQL is used to store and manage the website's data, providing a structured mechanism for data storage and retrieval.
+
+Communication with User's Computer: The server uses HTTP (Hypertext Transfer Protocol) to communicate with the user's computer, delivering web pages and content over the internet.
+
+Issues with the Infrastructure:
+Single Point of Failure (SPOF):
+The entire website is hosted on a single server, making it vulnerable to failure. If the server goes down, the website becomes inaccessible.
+Downtime during Maintenance:
+When performing maintenance tasks like deploying new code that requires restarting the web server, the website will experience downtime, impacting user accessibility.
+Scalability Challenges:
+With only one server, the infrastructure cannot easily handle a surge in incoming traffic. Scaling to accommodate increased load requires additional servers and load balancing mechanisms.
+By addressing these issues through redundancy, load balancing, and scalability measures, the web infrastructure can become more resilient and capable of handling varying levels of traffic and maintenance requirements.

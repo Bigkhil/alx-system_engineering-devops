@@ -1,0 +1,51 @@
+User Accessing the Website
+User Request:
+A user types www.foobar.com into their browser.
+Infrastructure Overview
+Servers
+Total Servers: 3
+Server 1: Load Balancer (HAProxy)
+Server 2: Web Server (Nginx) and Application Server
+Server 3: Database Server (MySQL)
+Additional Elements and Their Roles
+Load Balancer (HAProxy)
+Role: Distributes incoming traffic across multiple servers to ensure no single server is overwhelmed. This increases availability and reliability.
+Distribution Algorithm: Round Robin
+How it works: The load balancer sends each incoming request to the next server in line, distributing the load evenly among all servers.
+Web Server (Nginx)
+Role: Handles HTTP requests, serves static content, and forwards dynamic requests to the application server.
+Application Server
+Role: Processes dynamic requests, executes application logic, and interacts with the database to generate dynamic content.
+Database Server (MySQL)
+Role: Stores and retrieves data for the application. Configured in a Primary-Replica (Master-Slave) setup to ensure data availability and redundancy.
+Communication with the User's Computer
+Protocol: HTTP/HTTPS
+Infrastructure Diagram
+User's Browser: Sends a request to www.foobar.com.
+DNS Resolution: Resolves www.foobar.com to the IP of the load balancer.
+Load Balancer (HAProxy): Receives the request and forwards it to one of the web/application servers based on the round-robin algorithm.
+Web Server (Nginx): Receives the request and, if it's a static content request, serves it directly. If it's a dynamic content request, forwards it to the application server.
+Application Server: Processes the request, interacts with the database if necessary, and generates a response.
+Database (MySQL): Provides data to the application server upon request. In a Primary-Replica setup, the primary node handles write operations and synchronizes with the replica node, which handles read operations.
+Application Server: Sends the generated response back to Nginx.
+Web Server (Nginx): Delivers the final response to the load balancer.
+Load Balancer (HAProxy): Sends the response back to the user's browser.
+Active-Active vs Active-Passive Setup
+Active-Active Setup: Both servers are actively handling requests and distributing the load. This setup maximizes resource utilization and availability.
+Active-Passive Setup: One server handles all requests (active), while the other is on standby (passive). If the active server fails, the passive server takes over.
+Database Primary-Replica (Master-Slave) Cluster
+How it works: The primary (master) node handles all write operations. It then replicates data to the replica (slave) node(s) to ensure data redundancy and availability. The replica nodes handle read operations.
+Primary Node vs Replica Node:
+Primary Node: Handles all write operations and synchronizes data with replica nodes.
+Replica Node: Handles read operations and receives data updates from the primary node.
+Issues with This Infrastructure
+Single Points of Failure (SPOF)
+Load Balancer: If the load balancer fails, the entire website becomes unreachable.
+Database Primary Node: If the primary node fails, write operations cannot be performed, impacting the application's ability to update data.
+Security Issues
+No Firewall: The absence of a firewall exposes the servers to potential unauthorized access and attacks.
+No HTTPS: Without HTTPS, data transmitted between the user's browser and the server is not encrypted, making it vulnerable to interception and attacks.
+No Monitoring
+Issue: Without monitoring, it's challenging to detect and respond to performance issues, outages, or security incidents in real-time.
+Conclusion
+This three-server web infrastructure improves upon the single-server setup by introducing a load balancer for distribution and redundancy and a database Primary-Replica setup for data reliability. However, it still has potential points of failure and security issues that need to be addressed with additional measures like multiple load balancers, firewalls, HTTPS implementation, and monitoring tools.
