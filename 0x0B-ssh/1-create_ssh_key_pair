@@ -2,4 +2,4 @@
 # this script makes a pair of keys to use with specific requirements
 private_key = "school"
 pass_phrase = "betty"
-ssh-keygen -b 4096 -f "${private_key}" -N "${pass_phrase}"
+ssh-keygen -b 4096 -f "$private_key" -N "$pass_phrase"
