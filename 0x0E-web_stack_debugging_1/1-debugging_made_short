@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-# this script makes a symbolic link in the sites-enabled directory
-sudo ln -sf /etc/nginx/sites-available /etc/nginx/sites-enabled
-service nginx restart
+# configures nginx to run on port 80
+sed -i 's/8080/80/g' /etc/nginx/sites-enabled/default
 rm /run/nginx.pid
