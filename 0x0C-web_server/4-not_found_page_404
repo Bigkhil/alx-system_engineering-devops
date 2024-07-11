@@ -1,1 +1,9 @@
 #!/usr/bin/env bash
+# this bash script will install nginx on a webserver
+sudo apt-get -y update
+sudo apt-get -y install nginx
+echo "Hello World!" | sudo tee /var/www/html/index.html
+sudo sed -i '/server_name _;/a \\n\tlocation /redirect_me {\n\t\treturn 301 https://github.com/Bigkhil;\n\t}' /etc/nginx/sites-available/default
+echo "Ceci n'est pas une page" | sudo tee /var/www/html/404.html
+sudo sed -i '/server_name _;/a \\n\terror_page 404 /404.html;' /etc/nginx/sites-available/default
+sudo service nginx restart
