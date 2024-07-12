@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
 # this script makes a symbolic link in the sites-enabled directory
-sed -i 's/8080/80/g' /etc/nginx/sites-enabled/default
+rm /etc/nginx/sites-enabled/default
+sudo ln -sf /etc/nginx/sites-available /etc/nginx/sites-enabled
 service nginx restart
