@@ -1,0 +1,44 @@
+#!/usr/bin/env bash
+# this script demonstrates the dns record type and the ip of the subdomain
+#!/bin/bash
+
+# Function to get DNS record type and destination
+get_dns_info() {
+    local subdomain=$1
+    local domain=$2
+    local result
+
+    # Use dig to get the DNS record information
+    result=$(dig +short "$subdomain.$domain" | awk '{print}')
+
+    # Check if result is empty
+    if [ -z "$result" ]; then
+        echo "The subdomain $subdomain does not have a valid DNS record"
+    else
+        # Get the record type (A or CNAME)
+        record_type=$(dig "$subdomain.$domain" | grep -E "IN\s+(A|CNAME)" | awk '{print $4}' | head -n 1)
+
+        # Output the result
+        echo "The subdomain $subdomain is a $record_type record and points to $result"
+    fi
+}
+
+# Main script logic
+if [ $# -lt 1 ]; then
+    echo "Usage: $0 domain [subdomain]"
+    exit 1
+fi
+
+domain=$1
+subdomain=$2
+
+# If a specific subdomain is provided, audit only that subdomain
+if [ -n "$subdomain" ]; then
+    get_dns_info "$subdomain" "$domain"
+else
+    # Audit default subdomains
+    for sub in www lb-01 web-01 web-02; do
+        get_dns_info "$sub" "$domain"
+    done
+fi
+
