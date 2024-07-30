@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-# this script gather some information about an employee from an api
+'''this script gather some information about an employee from an api'''
 import requests
 import sys
 
