@@ -22,8 +22,6 @@ def main():
     response = requests.get(employee_url)
     employee = response.json()
     username = employee[0].get('username')
-    print(employee)
-    print(username)
     tasks = []
     for todo in data:
         tasks.append({
@@ -40,7 +38,9 @@ def main():
             'TASK_TITLE'
             ]
     with open(csv_name, "w", newline='') as csvfile:
-        writer = csv.DictWriter(csvfile, fieldnames=csv_columns)
+        writer = csv.DictWriter(
+                csvfile, fieldnames=csv_columns, quoting=csv.QUOTE_ALL
+                )
         writer.writerows(tasks)
 
 
