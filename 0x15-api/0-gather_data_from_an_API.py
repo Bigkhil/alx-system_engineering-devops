@@ -29,7 +29,7 @@ def main():
             )
     for job in data:
         if job.get('completed') is True:
-            print(f"    {job.get('title')}")
+            print(f"\t{job.get('title')}")
 
 
 if __name__ == "__main__":
