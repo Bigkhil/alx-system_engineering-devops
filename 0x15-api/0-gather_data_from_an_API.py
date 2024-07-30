@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 # this script gather some information about an employee from an api
-import sys
 import requests
+import sys
 
 
 def main():
