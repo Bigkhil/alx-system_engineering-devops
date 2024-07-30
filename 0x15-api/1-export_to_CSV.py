@@ -21,7 +21,9 @@ def main():
     data = response.json()
     response = requests.get(employee_url)
     employee = response.json()
-    username = employee[0].get('name')
+    username = employee[0].get('username')
+    print(employee)
+    print(username)
     tasks = []
     for todo in data:
         tasks.append({
